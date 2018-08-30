@@ -16,22 +16,19 @@
   "exceptionLogging": "STACKDRIVER",
   "sheets": {
     "macros": [{
-      "menuName": "Untitled Macro",
-      "functionName": "UntitledMacro"
-    }, {
       "menuName": "Add Row Below",
-      "functionName": "AddRowBelow",
+      "functionName": "addRowBelow",
       "defaultShortcut": "Ctrl+Alt+Shift+3"
     }, {
       "menuName": "Delete Row",
-      "functionName": "DeleteRow",
+      "functionName": "deleteRow",
       "defaultShortcut": "Ctrl+Alt+Shift+2"
     }, {
       "menuName": "Initialize Promotion Deadlines",
       "functionName": "calculateDeadlines"
     }, {
       "menuName": "Add New Event",
-      "functionName": "NewEventPopup",
+      "functionName": "newEventPopup",
       "defaultShortcut": "Ctrl+Alt+Shift+1"
     }]
   }
