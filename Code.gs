@@ -1,6 +1,7 @@
-var SCRIPT_NAME = 'Events Promotion Calendar Bound Script'
+var SCRIPT_NAME = ' CCN Events Promotion Calendar';
 var SCRIPT_VERSION = 'v1.2.dev_cb'
 
+//settings
 var documentConfig = {
   dataSheetName : 'Communications Director Master',
 };

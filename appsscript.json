@@ -16,14 +16,18 @@
     }, {
       "menuName": "Add Row Below",
       "functionName": "AddRowBelow",
-      "defaultShortcut": "Ctrl+Alt+Shift+2"
+      "defaultShortcut": "Ctrl+Alt+Shift+3"
     }, {
       "menuName": "Delete Row",
       "functionName": "DeleteRow",
-      "defaultShortcut": "Ctrl+Alt+Shift+1"
+      "defaultShortcut": "Ctrl+Alt+Shift+2"
     }, {
       "menuName": "Initialize Promotion Deadlines",
       "functionName": "calculateDeadlines"
+    }, {
+      "menuName": "Add New Event",
+      "functionName": "NewEventPopup",
+      "defaultShortcut": "Ctrl+Alt+Shift+1"
     }]
   }
 }
