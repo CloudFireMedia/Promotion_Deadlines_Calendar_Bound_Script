@@ -1,77 +1,134 @@
-var SCRIPT_NAME = 'Promotion Deadlines Calendar';
-var SCRIPT_VERSION = 'v1.2.dev_ajr';
+function prepareNewYearsData_() { 
 
-function onOpen(){ 
+  //mostly is NOT formatting but whatev, the menu action name should be updated
+  var sheet = SpreadsheetApp.getActive().getSheetByName(config.eventsCalendar.dataSheetName);
+  var dataRange = sheet.getDataRange();
+  var values = dataRange.getValues();
+  var startRow = sheet.getFrozenRows();
+  var numRows = values.length;
+  var numColumns = values[0].length;
 
-  var ui = SpreadsheetApp.getUi();
-
-  ui.createMenu("[ CloudFire ]")
+  //populate LISTED ON WEB CAL and PROMO REQUESTED columns
+  for(var i=startRow; i<numRows; i++) {
+    if(values[i][5] || values[i][6]) continue;//something already set, next please!
+    var val = values[i][2] == "N/A" ? 'N/A' : 'No';
+    sheet.getRange(i + 1, 6).setValue(val);//LISTED ON WEB CAL
+    sheet.getRange(i + 1, 7).setValue(val);//PROMO REQUESTED
+  }
   
-    .addItem("[ 1 ] Import Planning Calendar Data (this script is not yet written)", "") 
-    .addItem("[ 2 ] Format Planning Calendar Data", "prepareNewYearsData") // TODO - doesn't do any formatting except to merge the WEEK column
-    .addItem("[ 3 ] Apply Due Dates to New Data", "applyFormula") // is an arrayformula now - the action just fixes the formulas now
-    .addItem("[ 4 ] Populate Bulletin Schedule Based on Previous Year's Schedule", "repopulateBulletins")
+  combineSundayWeekCells();
+  
+  // Private Functions
+  // -----------------
+  
+  function ccombineSundayWeekCells() {
+    //search EVENT TITLE column for 'Sunday Service'
+    var sheet = SpreadsheetApp.getActive().getSheetByName(config.eventsCalendar.dataSheetName);
+    var dataRange = sheet.getDataRange();
+    var values = dataRange.getValues();
+    var sundayRows = [];
+  
+    for(var i=4; i<values.length; i++)//skip three header rows
+      if(values[i][4].indexOf("Sunday Service") > -1)
+        sundayRows.push(i);
     
-    .addSeparator()
-    
-/////////////////// GOT TO HERE ///////////////////    
-    
-    .addItem("Format Sheet", "PL.calendar_formatSheet")
-    
-    .addSubMenu(
-      ui.createMenu('Format...')
-      .addItem("Hide Old Rows", "PL.calendar_hideRows")
-      .addItem("Delete Empty Rows", "PL.calendar_removeEmptyRows")
-      .addItem("Set Border Color", "PL.calendar_colorBorders")
-      .addItem("Set Weeks Format", "PL.calendar_setWeeksFormat")
-      .addItem("Set Events Format", "PL.calendar_setEventsFormat")
-    )
-    
-    .addSeparator()
-    
-    .addSubMenu(
-      ui.createMenu('Tools')
-      .addItem('Restore Header', 'PL.calendar_restoreHeader')
-      .addItem('Backup Header', 'PL.calendar_backupHeader')
-      .addSeparator()
-      .addItem('Enable Automation', 'PL.calendar_setupAutomation') //note: do NOT run this from the library, use a proxy function ala: function setupAutomation(){PL.setupAutomation_responseForm()}
-      .addItem('Disable Automation', 'PL.calendar_disableAutomation') //note: do NOT run this from the library, use a proxy function ala: function disableAutomation(){PL.disableAutomation_responseForm()}
-    )  
-    
-    .addSeparator()
-    
-    .addItem("Check Deadlines", "PL.calendar_checkDeadlines")
-    .addItem("Check for Errors", "PL.calendar_checkTeamSheetsForErrors")
-    
-    .addToUi();
-    
-} // onOpen()
+    var maxValue = sundayRows[sundayRows.length - 1];//the last entry
+  
+    for(var k = 0; k < sundayRows.length; k++) {
+      var from = sundayRows[k]+1;//+1 0-based array offset
+      var to   = sundayRows[k+1];//+1 next array index, gives us the row before the next Sunday
+      var numRows = to - from +1;//number of rows
+      if(from > maxValue) break;
+      //sheet.getRange(from, 1, 1, 2).mergeVertically();//uh, merging a single row doesn't do anything, just skip (or end in this case)
+      //else
+      sheet.getRange(from, 1, numRows, 2).mergeVertically();
+    }
+  }
+  
+} // prepareNewYearsData()
 
-function prepareNewYearsData() {PDC.prepareNewYearsData()}
-function applyFormula() {PDC.applyFormula()}
-function repopulateBulletins_() {PDC.repopulateBulletins_()}
-/*
-function () {PDC.()}
-function () {PDC.()}
-function () {PDC.()}
-function () {PDC.()}
-function () {PDC.()}
-function () {PDC.()}
-function () {PDC.()}
-function () {PDC.()}
-*/
+function applyFormula_(){ 
+  var sheet = SpreadsheetApp.getActive().getSheetByName(config.eventsCalendar.dataSheetName);
+  var values = sheet.getDataRange().getValues();
+  //fix the WEEK column formula
+  sheet.getRange('A3').setFormula('={"WEEK"; ArrayFormula( if(D4:D, WEEKNUM(D4:D), IFERROR(1/0)) ) }')
+  //fix the Bronze, Silver, Gold column formulae
+  sheet.getRange('I3:K3').setFormulas([[
+    '={"Bronze";ArrayFormula(if(LEN(D4:D),if(GTE(D4:D, TODAY()+21), D4:D-21, "--"),IFERROR(1/0)))}',
+    '={"Silver";ArrayFormula(if(LEN(D4:D),if(GTE(D4:D, TODAY()+42), D4:D-42, "--"),IFERROR(1/0)))}',
+    '={"Gold";  ArrayFormula(if(LEN(D4:D),if(GTE(D4:D, TODAY()+70), D4:D-70, "--"),IFERROR(1/0)))}'
+  ]]);
+}
 
-function addRowBelow()               {PDC.addRowBelow()}
-function deleteRow()                 {PDC.deleteRow()}
-function calculateDeadlines()        {PDC.calculateDeadlines()}
-function fillSponsor()               {PDC.fillSponsor()}
-function fillTier()                  {PDC.fillTier()}
-function processResponse(eventArray) {PDC.processResponse(eventArray)}
-function newEventPopup()             {PDC.newEventPopup()}
+function getStaff_() {//returns [{},{},...]
 
-function onEdit(e)                 {}
-function onOpen(e)                 {PDC.onOpen()}
-//function onEdit_Triggered(e)     {PL.onEdit_eventsCalendar_Triggered(e)}//not needed
-function setupAutomation()         {PDC.setupAutomation_eventsCalendar()}
-function disableAutomation()       {PDC.disableAutomation_eventsCalendar()}
-function calendar_dailyTrigger()   {PDC.calendar_dailyTrigger()}
+  var sheet = SpreadsheetApp.openById(config.files.staffData).getActiveSheet();
+  var values = sheet.getDataRange().getValues();
+  values = values.slice(sheet.getFrozenRows());//remove headers if any
+  
+  var staff = values.map(function(c,i,a){
+    return {
+      name         : [c[0], c[1]].join(' '),
+      email        : c[8],
+      team         : c[11],
+      isTeamLeader : (c[12].toLowerCase()=='yes'),
+      jobTitle     : c[4],
+    };
+  },[]);
+
+  return staff;
+}
+
+function repopulateBulletins_() { 
+
+  ////this collects bulletin names for makeRepeat_() which is probably unused
+  // so there's really no reason for it to run either
+  // Since I'm keeping the other script just-in-case, I'll leave this one too
+  // --Bob 20181208
+  //note: based on the menu action name, perhaps this is used during new yeat processing.
+  
+  var sheet = SpreadsheetApp.getActive().getSheetByName(DATA_SHEET_NAME_);
+  var range = sheet.getRange(sheet.getFrozenRows()+1, 2, sheet.getLastRow()-sheet.getFrozenRows());
+  var bulletins = range.getValues()
+  .reduce(function(bulletins,name){
+    if(name[0]) bulletins.push(name[0]);
+    return bulletins;
+  },[]);
+  
+  makeRepeat(bulletins, sheet.getFrozenRows()+1);//readFrom...uh, was 6.  But I don't know why it would be so --Bob
+  
+  // Private Functions
+  // -----------------
+  
+  function makeRepeat(arr, readFrom) {
+    ////this appears to be doing nothing
+    // at one time it made the bulletin names repeat but that was likely before the bulletin names were merged vertically
+    // the script runs but makes no changes as there should never be a matcihng condition.
+    // I'll leave it here in case there is a use for it that I'm unaware of
+    // --Bob 20181208
+    var sheet = SpreadsheetApp.getActive().getSheetByName(DATA_SHEET_NAME_);
+    var range = sheet.getDataRange();
+    var values = range.getValues();
+    var k = 0;
+    var startFrom = 0;
+  
+    //gets the first row with data inb col 1
+    for(var j = readFrom; j <= values.length; j++) {
+      if(range.getCell(j, 1).getValue()) {
+        var startFrom = j;
+        break;
+      }
+    }
+    
+    while(k < 52) {//yeah, only if there really /are/ 52... otherwise infinite loop
+      if(startFrom > values.length) return;//happens during recursion
+      if(range.getCell(startFrom, 1).getValue()) {
+        range.getCell(startFrom, 2).setValue(arr[k]);
+        k++
+      }
+      startFrom++;
+    }
+    makeRepeat(arr, startFrom)
+  }
+  
+} // repopulateBulletins_()
