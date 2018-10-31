@@ -1,15 +1,35 @@
 {
-  "timeZone": "America/Chicago",
+  "timeZone": "America/Mexico_City",
   "dependencies": {
     "libraries": [{
-      "userSymbol": "Assert",
-      "libraryId": "1R-rxUHuQU0ez95FlZz9fxqifbYFszHnukqzv_3Uk5zM3eG4eRBrh_E1M",
-      "version": "15"
+      "userSymbol": "PDC",
+      "libraryId": "1ZtDKN9tgcEgtlX3rd4wfjqaVkUinWx9NxGVwjDu9-C7DUOCxxT2vs6oK",
+      "version": "1",
+      "developmentMode": true
     }, {
-      "userSymbol": "BBLog",
-      "libraryId": "1kzzYZhgODZluRmjsjh7t3O-ftmFAF9h1jaRHU0rOdf9irF0VUiJW33Kt",
-      "version": "10"
+      "userSymbol": "PL_OLD",
+      "libraryId": "1y9ackD7MdSsUkiGd1Au7DvkAgYRn7vkraabnwv12WvIj9YEK1579k48F",
+      "version": "12",
+      "developmentMode": true
     }]
   },
-  "exceptionLogging": "STACKDRIVER"
+  "exceptionLogging": "STACKDRIVER",
+  "sheets": {
+    "macros": [{
+      "menuName": "Add Row Below",
+      "functionName": "addRowBelow",
+      "defaultShortcut": "Ctrl+Alt+Shift+3"
+    }, {
+      "menuName": "Delete Row",
+      "functionName": "deleteRow",
+      "defaultShortcut": "Ctrl+Alt+Shift+2"
+    }, {
+      "menuName": "Initialize Promotion Deadlines",
+      "functionName": "calculateDeadlines"
+    }, {
+      "menuName": "Add New Event",
+      "functionName": "newEventPopup",
+      "defaultShortcut": "Ctrl+Alt+Shift+1"
+    }]
+  }
 }
