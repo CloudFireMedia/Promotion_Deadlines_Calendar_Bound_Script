@@ -44,9 +44,13 @@ function deleteRow()                 {return PDC.deleteRow()}
 function calculateDeadlines()        {return PDC.calculateDeadlines()}
 function newEventPopup()             {return PDC.newEventPopup()}
 
-// Triggers
+// Installable Triggers
 function dailyTrigger()              {return PDC.dailyTrigger()}
+
+// Simple Triggers
+function onEdit(event)               {return PDC.onEdit(event)}
 
 // Client Side 
 function fillSponsor()               {return PDC.fillSponsor()}
 function fillTier()                  {return PDC.fillTier()}
+function processResponse(eventArray) {return PDC.processResponse(eventArray)}
