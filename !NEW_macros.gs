@@ -101,43 +101,43 @@ function calculateDeadlines(){
   for (var c = 4; c < lastRow+1; c++) {
     var startDate  = spreadSheet.getRange('D' + c ).getValue();
     //finding value for column I
-    var newTier1 = new Date(startDate.getTime()-tier1DueDate*3600000*24);
+    var newTier1 = new Date(startDate.getTime()-tier1DueDate*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
     var day = (newTier1+"").substring(0,3);
     // if day is Sunday than move it to Monday
     if(day=='Sun'){
-      newTier1 = new Date(newTier1.getTime()+1*3600000*24);
+      newTier1 = new Date(newTier1.getTime()+1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
     }
     // if day is Saturday than move it to Friday
     if(day=='Sat'){
-      newTier1 = new Date(newTier1.getTime()-1*3600000*24);
+      newTier1 = new Date(newTier1.getTime()-1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
     }
     spreadSheet.getRange('I' + c ).setValue(newTier1); // setting value of active cell for Column I = tier1
     //Finding Value for Column J if tier2 is  not empty
     if(tier2DueDate != ''){
-      var newTier2 = new Date(startDate.getTime()-tier2DueDate*3600000*24);
+      var newTier2 = new Date(startDate.getTime()-tier2DueDate*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
       day = (newTier2+"").substring(0,3);
       // if day is Sunday than move it to Monday
       if(day=='Sun'){
-        newTier2 = new Date(newTier2.getTime()+1*3600000*24);
+        newTier2 = new Date(newTier2.getTime()+1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
       }
       // if day is Saturday than move it to Friday
       if(day=='Sat'){
-        newTier2 = new Date(newTier2.getTime()-1*3600000*24);
+        newTier2 = new Date(newTier2.getTime()-1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
       }
       spreadSheet.getRange('J' + c ).setValue(newTier2); // setting value of active cell for Column J = tier2
     }
     
     //finding value for column K if tier3 is not empty
     if(tier3DueDate != ''){
-      var newTier3 = new Date(startDate.getTime()-tier3DueDate*3600000*24);
+      var newTier3 = new Date(startDate.getTime()-tier3DueDate*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
       day = (newTier3+"").substring(0,3);
       // if day is Sunday than move it to Monday
       if(day=='Sun'){
-        newTier3 = new Date(newTier3.getTime()+1*3600000*24);
+        newTier3 = new Date(newTier3.getTime()+1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
       }
       // if day is Saturday than move it to Friday
       if(day=='Sat'){
-        var newTier3 = new Date(newTier3.getTime()-1*3600000*24);
+        var newTier3 = new Date(newTier3.getTime()-1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
       }
       spreadSheet.getRange('K' + c ).setValue(newTier3); // setting value of active cell for Column K = tier2
     }
@@ -255,42 +255,42 @@ function onEdit(e)
   var eidtRow = spreadSheet.getCurrentCell().getRow();
   var newDate  = spreadSheet.getRange('D' + eidtRow ).getValue(); // getting updated date in column D
   //updating value for tier1 in Column I
-  var newtier1Value = new Date(newDate.getTime()-tier1Value*3600000*24);
+  var newtier1Value = new Date(newDate.getTime()-tier1Value*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
   var day = (newtier1Value+"").substring(0,3);
   // if day is Sunday than set it to next Monday
   if(day=='Sun'){
-    newtier1Value = new Date(newtier1Value.getTime()+1*3600000*24);
+    newtier1Value = new Date(newtier1Value.getTime()+1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
   }
   // if day is Saturday than set it to  previous Friday
   if(day=='Sat'){
-    newtier1Value = new Date(newtier1Value.getTime()-1*3600000*24);
+    newtier1Value = new Date(newtier1Value.getTime()-1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
   }
   spreadSheet.getRange('I' + eidtRow ).setValue(newtier1Value); // setting new value of tier1
   if(tier2Value!=''){
     //updating value for tier2 in Column J
-    var newtier2Value = new Date(newDate.getTime()-tier2Value*3600000*24);
+    var newtier2Value = new Date(newDate.getTime()-tier2Value*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
     var day = (newtier2Value+"").substring(0,3);
     // if day is Sunday than set it to next Monday
     if(day=='Sun'){
-      newtier2Value = new Date(newtier2Value.getTime()+1*3600000*24);
+      newtier2Value = new Date(newtier2Value.getTime()+1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
     }
     // if day is Saturday than set it to  previous Friday
     if(day=='Sat'){
-      newtier2Value = new Date(newtier2Value.getTime()-1*3600000*24);
+      newtier2Value = new Date(newtier2Value.getTime()-1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
     }
     spreadSheet.getRange('J' + eidtRow ).setValue(newtier2Value); // setting new value of tier2
   }
   if(tier3Value!=''){
     //updating value for tier3 in Column K
-    var newtier3Value = new Date(newDate.getTime()-tier3Value*3600000*24);
+    var newtier3Value = new Date(newDate.getTime()-tier3Value*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
     day = (newtier3Value+"").substring(0,3);
     // if day is Sunday than set it to next Monday
     if(day=='Sun'){
-      newtier3Value = new Date(newtier3Value.getTime()+1*3600000*24);
+      newtier3Value = new Date(newtier3Value.getTime()+1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
     }
     // if day is Saturday than set it to  previous Friday
     if(day=='Sat'){
-      newtier3Value = new Date(newtier3Value.getTime()-1*3600000*24);
+      newtier3Value = new Date(newtier3Value.getTime()-1*3600000*24).toLocaleDateString(undefined, {day:'numeric', month: 'numeric', year: 'numeric'});
     }
     spreadSheet.getRange('K' + eidtRow ).setValue(newtier3Value); // setting new value of tier3
   }
