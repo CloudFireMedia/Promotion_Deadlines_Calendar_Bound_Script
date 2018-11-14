@@ -1,1 +1,1 @@
-# Events-Promotion-Calendar-Bound-Script
+# Promotion_Deadlines_Calendar_Bound_Script
