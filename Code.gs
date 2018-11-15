@@ -1,5 +1,5 @@
 var SCRIPT_NAME = 'Promotion Deadlines Calendar';
-var SCRIPT_VERSION = 'v1.4';
+var SCRIPT_VERSION = 'v1.4.dev_ajr';
 
 // Macros
 function addRowBelow()               {return PDC.addRowBelow()}

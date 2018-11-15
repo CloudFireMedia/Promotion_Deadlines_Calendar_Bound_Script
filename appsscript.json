@@ -2,9 +2,14 @@
   "timeZone": "America/Mexico_City",
   "dependencies": {
     "libraries": [{
-      "userSymbol": "PromotionDeadlinesCalendarPRODUCTION",
+      "userSymbol": "PDC_PROD",
       "libraryId": "1Qaw15ohjYMCvuNJt281Lr2bBrP6BJSyP1bYz8wG5bVkCll74k09IYuR3",
       "version": "1"
+    }, {
+      "userSymbol": "PDC",
+      "libraryId": "1ZtDKN9tgcEgtlX3rd4wfjqaVkUinWx9NxGVwjDu9-C7DUOCxxT2vs6oK",
+      "version": "5",
+      "developmentMode": true
     }]
   },
   "exceptionLogging": "STACKDRIVER",
