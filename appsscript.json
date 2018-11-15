@@ -2,9 +2,9 @@
   "timeZone": "America/Mexico_City",
   "dependencies": {
     "libraries": [{
-      "userSymbol": "PromotionDeadlinesCalendarPRODUCTION",
+      "userSymbol": "PDC",
       "libraryId": "1Qaw15ohjYMCvuNJt281Lr2bBrP6BJSyP1bYz8wG5bVkCll74k09IYuR3",
-      "version": "1"
+      "version": "4"
     }]
   },
   "exceptionLogging": "STACKDRIVER",
