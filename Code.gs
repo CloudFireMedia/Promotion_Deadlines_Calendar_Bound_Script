@@ -1,4 +1,4 @@
-var SCRIPT_NAME = 'Promotion Deadlines Calendar';
+var SCRIPT_NAME = 'Promotion_Deadlines_Calendar_Bound_Script';
 var SCRIPT_VERSION = 'v1.5';
 
 // Macros
