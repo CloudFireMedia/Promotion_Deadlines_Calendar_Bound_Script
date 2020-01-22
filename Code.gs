@@ -1,5 +1,5 @@
 var SCRIPT_NAME = 'Promotion_Deadlines_Calendar_Bound_Script'
-var SCRIPT_VERSION = 'v1.5'
+var SCRIPT_VERSION = 'v1.5.dev_cdb'
 
 // Macros
 function addRowBelow()        {return PDC.addRowBelow()}
